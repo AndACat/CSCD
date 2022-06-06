@@ -1,0 +1,27 @@
+spring:
+  datasource: #数据库账户及密码设置
+    url: jdbc:mysql://localhost:3306/cscd?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false #&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root #修改为数据库账号
+    password: Root123...
+
+  thymeleaf:
+    cache: false # 关闭缓存
+    prefix: classpath:/htmls
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+#日志级别
+logging:
+  level:
+    com: debug
+  pattern:
+    console: "%-5level =>> %msg%n"
+
+server:
+  port: 80
+
+#mybatis:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
