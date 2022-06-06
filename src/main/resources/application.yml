@@ -2,6 +2,8 @@ spring:
   datasource: #数据库账户及密码设置
     url: jdbc:mysql://localhost:3306/cscd?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false #&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root #修改为数据库账号
+#    password: 8198
     username: root #修改为数据库账号
     password: Root123...
 

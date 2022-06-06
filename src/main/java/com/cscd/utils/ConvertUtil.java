@@ -3,9 +3,6 @@ package com.cscd.utils;
 import com.cscd.bos.*;
 import com.cscd.dao.*;
 import com.cscd.dos.*;
-import com.cscd.bos.*;
-import com.cscd.dao.*;
-import com.cscd.dos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,10 +25,10 @@ public class ConvertUtil {
     @Autowired
     private RegionDao regionDao;
 
-    public CompanyDailyBo toCompanyDailyBo(CompanyDailyDo companyDailyDo){
+    public CompanyDailyBo toCompanyDailyBo(CompanyDailyDo companyDailyDo, boolean deepQuery){
         return companyDailyDo == null ? null : new CompanyDailyBo(
                 companyDailyDo.getUid(),
-                toCompanyBo(companyDao.selectCompanyByUid(companyDailyDo.getCompanyUid())),
+                toCompanyBo(companyDao.selectCompanyByUid(companyDailyDo.getCompanyUid()), deepQuery),
                 companyDailyDo.getBoom(),
                 companyDailyDo.getFire(),
                 companyDailyDo.getUpdateDate()
@@ -47,11 +44,11 @@ public class ConvertUtil {
         );
     }
 
-    public CompanyBo toCompanyBo(CompanyDo companyDo){
+    public CompanyBo toCompanyBo(CompanyDo companyDo, boolean deepQuery){
         return companyDo == null ? null : new CompanyBo(
                 companyDo.getUid(),
                 companyDo.getCompanyName(),
-                toRegionBo(regionDao.selectRegionByRegionId(companyDo.getRegionId())),
+                !deepQuery ? null : toRegionBo(regionDao.selectRegionByRegionId(companyDo.getRegionId())),
                 companyDo.getEquipmentNum(),
                 companyDo.getDescribes(),
                 companyDo.getUpdateDate()
@@ -91,11 +88,11 @@ public class ConvertUtil {
 
     }
 
-    public DeviceBo toDeviceBo(DeviceDo deviceDo){
+    public DeviceBo toDeviceBo(DeviceDo deviceDo, boolean deepQuery){
         return deviceDo == null ? null : new DeviceBo(
                 deviceDo.getUid(),
                 deviceDo.getDeviceName(),
-                toCompanyBo(companyDao.selectCompanyByUid(deviceDo.getCompanyUid())),
+                !deepQuery ? null : toCompanyBo(companyDao.selectCompanyByUid(deviceDo.getCompanyUid()), true),
                 deviceDo.getTemperatureMin(),
                 deviceDo.getTemperatureMax(),
                 deviceDo.getHumidityMin(),
@@ -133,11 +130,11 @@ public class ConvertUtil {
         );
     }
 
-    public DeviceDataBo toDeviceDataBo(DeviceDataDo deviceDataDo){
+    public DeviceDataBo toDeviceDataBo(DeviceDataDo deviceDataDo, boolean deepQuery){
         return deviceDataDo == null ? null : new DeviceDataBo(
                 deviceDataDo.getUid(),
-                toCompanyBo(companyDao.selectCompanyByUid(deviceDataDo.getCompanyUid())),
-                toDeviceBo(deviceDao.selectDeviceByUid(deviceDataDo.getDeviceUid())),
+                toCompanyBo(companyDao.selectCompanyByUid(deviceDataDo.getCompanyUid()), deepQuery),
+                !deepQuery ? null : toDeviceBo(deviceDao.selectDeviceByUid(deviceDataDo.getDeviceUid()), true),
                 deviceDataDo.getTemperature(),
                 deviceDataDo.getHumidity(),
                 deviceDataDo.getNaturalgas(),

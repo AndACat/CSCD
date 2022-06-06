@@ -4,6 +4,7 @@ import com.cscd.dos.CompanyDailyDo;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -30,4 +31,14 @@ public interface CompanyDailyDao {
 
     @Insert("insert into companydaily (uid, companyuid, boom, fire, updatedate) values (#{companyDaily.uid}, #{companyDaily.companyUid}, #{companyDaily.boom}, #{companyDaily.fire}, #{companyDaily.updateDate})")
     Boolean insertCompanyDailyWithUpdateDate(@Param("companyDaily") CompanyDailyDo companyDailyDo);
+
+
+    @Select("select count(1) from companydaily where boom = '1' and companyuid in ( " +
+            "select uid from (select uid from company where regionid in ( " +
+            "select regionid from region where regionid = #{regionId} union " +
+            "select regionid from region where regionparentid = #{regionId} union " +
+            "select regionid from region where regionparentid in (select regionid from region where regionparentid = #{regionId})) " +
+            ") as temp ) and updatedate > #{minDate} and updatedate < #{maxDate}")
+    Integer selectBoomCountByRegionId(@Param("regionId") String regionId, @Param("minDate") LocalDateTime minDate, @Param("maxDate")LocalDateTime maxDate);
+
 }

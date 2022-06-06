@@ -24,8 +24,8 @@ public class InfoController {
         return RespMsg.getOKInstance(poList);
     }
 
-    @RequestMapping("/queryCompanyWarn")
-    public RespMsg queryCompanyWarn(){
+    @RequestMapping("/queryTodayWarnDevicesByCompany")
+    public RespMsg queryTodayWarnDevicesByCompany(){
         List<Po2> po2List = infoService.queryCompanyWarn();
         return RespMsg.getOKInstance(po2List);
     }

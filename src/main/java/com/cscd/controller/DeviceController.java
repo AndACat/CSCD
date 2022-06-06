@@ -39,12 +39,12 @@ public class DeviceController {
 
     @RequestMapping("/device/queryAllOnlineDevice")
     public RespMsg queryAllOnlineDevice(){
-        List<DeviceBo> deviceBos = deviceService.selectAllOfflineDevice();
+        List<DeviceBo> deviceBos = deviceService.selectAllOfflineDevice(true);
         return RespMsg.getOKInstance(deviceBos);
     }
     @RequestMapping("/device/queryAllOfflineDevice")
     public RespMsg queryAllOfflineDevice(){
-        List<DeviceBo> deviceBos = deviceService.selectAllOfflineDevice();
+        List<DeviceBo> deviceBos = deviceService.selectAllOfflineDevice(true);
         return RespMsg.getOKInstance(deviceBos);
     }
     @RequestMapping("/device/queryAllWarnDevice")
@@ -54,13 +54,13 @@ public class DeviceController {
         } else if (limit < 1) {
             limit = 12;
         }
-        List<DeviceBo> deviceBos = deviceService.selectAllWarnDevice(limit);
+        List<DeviceBo> deviceBos = deviceService.selectAllWarnDevice(limit, true);
         return RespMsg.getOKInstance(deviceBos);
     }
 
     @RequestMapping("/device/queryAllDevice")
     public RespMsg queryAllDevice(){
-        List<DeviceBo> deviceBos = deviceService.selectAllDevice();
+        List<DeviceBo> deviceBos = deviceService.selectAllDevice(true);
         return RespMsg.getOKInstance(deviceBos);
     }
 

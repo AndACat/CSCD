@@ -19,31 +19,31 @@ public class DeviceDataService {
     @Autowired
     private ConvertUtil convertUtil;
 
-    public List<DeviceDataBo> selectAllDeviceData(){
+    public List<DeviceDataBo> selectAllDeviceData(boolean deepQuery){
         List<DeviceDataDo> deviceDataDoList = deviceDataDao.selectAllDeviceData();
         List<DeviceDataBo> deviceDataBoList = new ArrayList<>();
-        deviceDataDoList.stream().forEach(deviceDataDo -> deviceDataBoList.add(convertUtil.toDeviceDataBo(deviceDataDo)));
+        deviceDataDoList.stream().forEach(deviceDataDo -> deviceDataBoList.add(convertUtil.toDeviceDataBo(deviceDataDo, deepQuery)));
         return deviceDataBoList;
     }
 
-    public List<DeviceDataBo> selectDeviceDataByCompanyUid(String companyUid){
+    public List<DeviceDataBo> selectDeviceDataByCompanyUid(String companyUid, boolean deepQuery){
         List<DeviceDataDo> deviceDataDoList = deviceDataDao.selectDeviceDataByCompanyUid(companyUid);
         List<DeviceDataBo> deviceDataBoList = new ArrayList<>();
-        deviceDataDoList.stream().forEach(deviceDataDo -> deviceDataBoList.add(convertUtil.toDeviceDataBo(deviceDataDo)));
+        deviceDataDoList.stream().forEach(deviceDataDo -> deviceDataBoList.add(convertUtil.toDeviceDataBo(deviceDataDo, deepQuery)));
         return deviceDataBoList;
     }
 
-    public List<DeviceDataBo> selectDeviceDataByDeviceUid(String deviceUid, Integer limit){
+    public List<DeviceDataBo> selectDeviceDataByDeviceUid(String deviceUid, Integer limit, boolean deepQuery){
         List<DeviceDataDo> deviceDataDoList = deviceDataDao.selectDeviceDataByDeviceUid(deviceUid, limit);
         List<DeviceDataBo> deviceDataBoList = new ArrayList<>();
-        deviceDataDoList.stream().forEach(deviceDataDo -> deviceDataBoList.add(convertUtil.toDeviceDataBo(deviceDataDo)));
+        deviceDataDoList.stream().forEach(deviceDataDo -> deviceDataBoList.add(convertUtil.toDeviceDataBo(deviceDataDo, deepQuery)));
         return deviceDataBoList;
     }
 
-    public List<DeviceDataBo> selectDeviceDataByWarn(){
+    public List<DeviceDataBo> selectDeviceDataByWarn(boolean deepQuery){
         List<DeviceDataDo> deviceDataDoList = deviceDataDao.selectDeviceDataByWarn();
         List<DeviceDataBo> deviceDataBoList = new ArrayList<>();
-        deviceDataDoList.stream().forEach(deviceDataDo -> deviceDataBoList.add(convertUtil.toDeviceDataBo(deviceDataDo)));
+        deviceDataDoList.stream().forEach(deviceDataDo -> deviceDataBoList.add(convertUtil.toDeviceDataBo(deviceDataDo, deepQuery)));
         return deviceDataBoList;
     }
 

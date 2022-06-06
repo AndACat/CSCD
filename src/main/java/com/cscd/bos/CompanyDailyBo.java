@@ -22,7 +22,7 @@ public class CompanyDailyBo {
     /**
      *  所属公司
      */
-    private CompanyBo company;
+    private CompanyBo company = null;
     /**
      * 是否爆炸
      * True: 爆炸

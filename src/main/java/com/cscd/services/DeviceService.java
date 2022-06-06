@@ -25,23 +25,23 @@ public class DeviceService {
     @Autowired
     private CompanyService companyService;
 
-    public List<DeviceBo> selectAllDevice(){
+    public List<DeviceBo> selectAllDevice(boolean deepQuery){
         List<DeviceDo> deviceDoList = deviceDao.selectAllDevice();
         List<DeviceBo> deviceBoList = new ArrayList<>();
-        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo)));
+        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo, deepQuery)));
         return deviceBoList;
     }
 
-    public DeviceBo selectDeviceByUid(String uid){
+    public DeviceBo selectDeviceByUid(String uid, boolean deepQuery){
         DeviceDo deviceDo = deviceDao.selectDeviceByUid(uid);
-        DeviceBo deviceBo = convertUtil.toDeviceBo(deviceDo);
+        DeviceBo deviceBo = convertUtil.toDeviceBo(deviceDo, deepQuery);
         return deviceBo;
     }
 
-    public List<DeviceBo> selectDeviceByCompanyUid(String companyUid){
+    public List<DeviceBo> selectDeviceByCompanyUid(String companyUid, boolean deepQuery){
         List<DeviceDo> deviceDoList = deviceDao.selectDeviceByCompanyUid(companyUid);
         List<DeviceBo> deviceBoList = new ArrayList<>();
-        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo)));
+        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo, deepQuery)));
         return deviceBoList;
     }
 
@@ -63,45 +63,45 @@ public class DeviceService {
         return aBoolean;
     }
 
-    public List<DeviceBo> selectAllOnlineDevice(){
+    public List<DeviceBo> selectAllOnlineDevice(boolean deepQuery){
         List<DeviceDo> deviceDoList = deviceDao.selectAllOnlineDevice();
         List<DeviceBo> deviceBoList = new ArrayList<>();
-        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo)));
+        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo, deepQuery)));
         return deviceBoList;
     }
 
-    public List<DeviceBo> selectAllOfflineDevice(){
+    public List<DeviceBo> selectAllOfflineDevice(boolean deepQuery){
         List<DeviceDo> deviceDoList = deviceDao.selectAllOfflineDevice();
         List<DeviceBo> deviceBoList = new ArrayList<>();
-        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo)));
+        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo, deepQuery)));
         return deviceBoList;
     }
 
-    public List<DeviceBo> selectAllWarnDevice(int limit){
+    public List<DeviceBo> selectAllWarnDevice(int limit, boolean deepQuery){
         List<DeviceDo> deviceDoList = deviceDao.selectAllWarnDevice(limit);
         List<DeviceBo> deviceBoList = new ArrayList<>();
-        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo)));
+        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo, deepQuery)));
         return deviceBoList;
     }
 
-    public List<DeviceBo> selectOnlineDeviceByCompanyUid(String companyUid){
+    public List<DeviceBo> selectOnlineDeviceByCompanyUid(String companyUid, boolean deepQuery){
         List<DeviceDo> deviceDoList = deviceDao.selectOnlineDeviceByCompanyUid(companyUid);
         List<DeviceBo> deviceBoList = new ArrayList<>();
-        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo)));
+        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo, deepQuery)));
         return deviceBoList;
     }
 
-    public List<DeviceBo> selectOfflineDeviceByCompanyUid(String companyUid){
+    public List<DeviceBo> selectOfflineDeviceByCompanyUid(String companyUid, boolean deepQuery){
         List<DeviceDo> deviceDoList = deviceDao.selectOfflineDeviceByCompanyUid(companyUid);
         List<DeviceBo> deviceBoList = new ArrayList<>();
-        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo)));
+        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo, deepQuery)));
         return deviceBoList;
     }
 
-    public List<DeviceBo> selectWarnDeviceByCompanyUid(String companyUid){
+    public List<DeviceBo> selectWarnDeviceByCompanyUid(String companyUid, boolean deepQuery){
         List<DeviceDo> deviceDoList = deviceDao.selectWarnDeviceByCompanyUid(companyUid);
         List<DeviceBo> deviceBoList = new ArrayList<>();
-        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo)));
+        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo, deepQuery)));
         return deviceBoList;
     }
 
@@ -132,7 +132,7 @@ public class DeviceService {
     public List<DeviceBo> selectWarnDevicesByDate(LocalDateTime minDate, LocalDateTime maxDate){
         List<DeviceDo> deviceDataDoList = deviceDao.selectWarnDevicesByDate(minDate, maxDate);
         List<DeviceBo> deviceBoList = new ArrayList<>();
-        deviceDataDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo)));
+        deviceDataDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo, true)));
         return deviceBoList;
     }
 
@@ -144,7 +144,7 @@ public class DeviceService {
     public List<DeviceBo> selectWarnDevicesByPlace(String regionId) {
         List<DeviceDo> deviceDoList = deviceDao.selectWarnDevicesByPlace(regionId);
         List<DeviceBo> deviceBoList = new ArrayList<>();
-        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo)));
+        deviceDoList.stream().forEach(deviceDo -> deviceBoList.add(convertUtil.toDeviceBo(deviceDo, true)));
         return deviceBoList;
     }
 }

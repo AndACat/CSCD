@@ -25,6 +25,8 @@ public class InfoService {
     DeviceService deviceService;
     @Autowired
     DeviceDataService deviceDataService;
+    @Autowired
+    CompanyDailyService companyDailyService;
 
     /**
      * 查找前n个地区的设备数量，并降序排序
@@ -34,7 +36,7 @@ public class InfoService {
         List<Po1> poList = new ArrayList<>();
         List<RegionBo> regionBoList = regionService.selectRegionByRegionLevel("1");
         for (RegionBo regionBo : regionBoList) {
-            Integer deviceCount = companyService.selectCompanyByRegionId(regionBo.getRegionId());
+            Integer deviceCount = companyService.selectEquipmentNumByRegionId(regionBo.getRegionId());
             poList.add(new Po1(regionBo, deviceCount == null ? 0 : deviceCount));
         }
         poList.sort((o1, o2) -> o2.getDeviceCount() - o1.getDeviceCount());
@@ -55,7 +57,7 @@ public class InfoService {
                 LocalDateTime maxDate = LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), 23, 59, 59);
                 minDate = minDate.plusDays(-i);
                 maxDate = maxDate.plusDays(-i);
-                Integer boomCount = companyService.selectBoomCount(regionBo.getRegionId(), minDate, maxDate);
+                Integer boomCount = companyDailyService.selectBoomCount(regionBo.getRegionId(), minDate, maxDate);
                 po3.add(minDate.toLocalDate(), boomCount);
             }
             po3List.add(po3);
@@ -71,7 +73,7 @@ public class InfoService {
      */
     public List<Po2> queryCompanyWarn(){
         List<Po2> po2List = new ArrayList<>();
-        List<CompanyBo> companyBoList = companyService.selectAllCompany();
+        List<CompanyBo> companyBoList = companyService.selectAllCompany(true);
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime minDate = LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), 00, 00, 00);
         LocalDateTime maxDate = LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), 23, 59, 59);

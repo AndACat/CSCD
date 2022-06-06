@@ -22,8 +22,11 @@ public class DeviceDataController {
     public RespMsg queryDevice(@RequestParam("deviceUid") String deviceUid, @RequestParam(value = "limit", required = false) Integer limit){
         if(limit == null){
             limit = 10;
+        } else if (limit < 1) {
+            limit = 10;
         }
-        List<DeviceDataBo> deviceDataBoList = deviceDataService.selectDeviceDataByDeviceUid(deviceUid, limit);
+        List<DeviceDataBo> deviceDataBoList = deviceDataService.selectDeviceDataByDeviceUid(deviceUid, limit, true);
+        deviceDataBoList.stream().forEach(deviceDataBo -> deviceDataBo.getDevice().setCompany(null));
         return RespMsg.getOKInstance(deviceDataBoList);
     }
 }

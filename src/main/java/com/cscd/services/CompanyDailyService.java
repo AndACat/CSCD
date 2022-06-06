@@ -7,6 +7,7 @@ import com.cscd.utils.ConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,23 +19,23 @@ public class CompanyDailyService {
     @Autowired
     private ConvertUtil convertUtil;
 
-    public List<CompanyDailyBo> selectAllCompanyDaily(){
+public List<CompanyDailyBo> selectAllCompanyDaily(boolean deepQuery){
         List<CompanyDailyDo> companyDailyDoList = companyDailyDao.selectAllCompanyDaily();
         List<CompanyDailyBo> companyDailyBoList = new ArrayList<>();
-        companyDailyDoList.stream().forEach(companyDailyDo -> companyDailyBoList.add(convertUtil.toCompanyDailyBo(companyDailyDo)));
+        companyDailyDoList.stream().forEach(companyDailyDo -> companyDailyBoList.add(convertUtil.toCompanyDailyBo(companyDailyDo, deepQuery)));
         return companyDailyBoList;
     }
 
-    public CompanyDailyBo selectCompanyDailyByUid(String uid){
+    public CompanyDailyBo selectCompanyDailyByUid(String uid, boolean deepQuery){
         CompanyDailyDo companyDailyDo = companyDailyDao.selectCompanyDailyByUid(uid);
-        CompanyDailyBo companyDailyBo = convertUtil.toCompanyDailyBo(companyDailyDo);
+        CompanyDailyBo companyDailyBo = convertUtil.toCompanyDailyBo(companyDailyDo, deepQuery);
         return companyDailyBo;
     }
 
-    public List<CompanyDailyBo> selectCompanyDailyByCompanyUid(String companyUid){
+    public List<CompanyDailyBo> selectCompanyDailyByCompanyUid(String companyUid, boolean deepQuery){
         List<CompanyDailyDo> companyDailyDoList = companyDailyDao.selectCompanyDailyByCompanyUid(companyUid);
         List<CompanyDailyBo> companyDailyBoList = new ArrayList<>();
-        companyDailyDoList.stream().forEach(companyDailyDo -> companyDailyBoList.add(convertUtil.toCompanyDailyBo(companyDailyDo)));
+        companyDailyDoList.stream().forEach(companyDailyDo -> companyDailyBoList.add(convertUtil.toCompanyDailyBo(companyDailyDo, deepQuery)));
         return companyDailyBoList;
     }
 
@@ -55,5 +56,9 @@ public class CompanyDailyService {
     public Boolean insertCompanyDailyWithUpdateDate(CompanyDailyBo companyDailyBo){
         Boolean aBoolean = companyDailyDao.insertCompanyDailyWithUpdateDate(convertUtil.toCompanyDailyDo(companyDailyBo));
         return aBoolean;
+    }
+    public Integer selectBoomCount(String regionId, LocalDateTime minDate, LocalDateTime maxDate) {
+        Integer count = companyDailyDao.selectBoomCountByRegionId(regionId, minDate, maxDate);
+        return count;
     }
 }

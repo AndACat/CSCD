@@ -2,14 +2,15 @@ package com.cscd.dao;
 
 import com.cscd.dos.DeviceDataDo;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
-@Repository
+//@Repository
+@Component
 @SuppressWarnings("all")
 public interface DeviceDataDao {
     @Select("select * from devicedata order by updatedate desc")
